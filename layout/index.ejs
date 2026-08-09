@@ -1,17 +1,11 @@
 <div class="posts">
     <% page.posts.each(function(post) { %>
         <article>
-            <h2 class="title">
-                <a href="<%- url_for(post.path) %>"><%= post.title %></a>
-            </h2>
-            <div class="meta">
-                <span><%= date(post.date, 'YYYY-MM-DD') %></span>
-            </div>
-            <div class="excerpt">
-                <%- post.excerpt %>
-            </div>
+            <h2 class="title"><a href="<%- url_for(post.path) %>"><%= post.title %></a></h2>
+            <div class="meta"><%= date(post.date, 'YYYY-MM-DD') %></div>
+            <div class="excerpt"><%- post.excerpt %></div>
         </article>
     <% }) %>
 </div>
 
-<%- partial('_partial/pagination') %> 
+<%- partial('_partial/pagination') %>

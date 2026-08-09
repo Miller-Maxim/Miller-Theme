@@ -2,96 +2,50 @@
 <html lang="<%= config.language %>">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- 网站图标 -->
-    <link rel="icon" type="image/png" href="https://ooo.0x0.ooo/2025/01/24/OGr4hS.png">
-    <link rel="apple-touch-icon" href="https://ooo.0x0.ooo/2025/01/24/OGr4hS.png">
-    <link rel="shortcut icon" type="image/png" href="https://ooo.0x0.ooo/2025/01/24/OGr4hS.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23FF8FA3'%3E%3Cpath d='M50 50 Q35 30 20 35 Q30 50 50 50 Z'/%3E%3Cpath d='M50 50 Q70 35 80 35 Q70 50 50 50 Z' transform='rotate(72 50 50)'/%3E%3Cpath d='M50 50 Q70 35 80 35 Q70 50 50 50 Z' transform='rotate(144 50 50)'/%3E%3Cpath d='M50 50 Q70 35 80 35 Q70 50 50 50 Z' transform='rotate(216 50 50)'/%3E%3Cpath d='M50 50 Q70 35 80 35 Q70 50 50 50 Z' transform='rotate(288 50 50)'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='6' fill='%23FFD0DC'/%3E%3C/svg%3E">
     <title><%= page.title || config.title %></title>
     <%- css('css/style.css') %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <div class="sakura-falling" aria-hidden="true">
+        <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+        <span class="petal"></span><span class="petal"></span><span class="petal"></span>
+    </div>
+
     <header>
         <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="https://ooo.0x0.ooo/2025/01/24/OGr4hS.png" alt="MILLENNIUM Studio Logo">
-                </div>
-                <div class="title-group">
-                    <h1>
-                        <a href="<%- url_for() %>">
-                            <span class="desktop-title">MILLENNIUM Studio's Website</span>
-                            <span class="mobile-title">MILLENNIUM Studio</span>
-                        </a>
-                    </h1>
-                    <p class="subtitle"><%= config.subtitle %></p>
-                </div>
-                <div class="menu-toggle">
-                    <div class="menu-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
+            <div class="header-inner">
+                <a href="<%- url_for() %>" class="brand">
+                    <span class="logo-sakura">❀</span>
+                    <span class="brand-title"><%= config.title %></span>
+                </a>
+                <nav class="nav-links">
+                    <a href="<%- url_for() %>" class="nav-link <% if(page.path === 'index.html' || page.path === '') { %>active<% } %>">Home</a>
+                    <% if (site.categories.length) { %>
+                        <a href="<%- url_for('categories') %>" class="nav-link">Categories</a>
+                    <% } %>
+                    <a href="https://github.com/Miller-Maxim" target="_blank" class="nav-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="mailto:<%= config.email || 'miller-maxim@example.com' %>" class="nav-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </nav>
+                <button class="nav-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-        </div>
-        <div class="menu-overlay">
-            <nav class="menu-content">
-                <div class="menu-section">
-                    <h3>社交媒体</h3>
-                    <ul class="social-links">
-                        <li>
-                            <a href="https://github.com/MILLENNIUM-Studio" target="_blank" title="Github">
-                                <i class="fab fa-github"></i>
-                                <span>Github</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://gitee.com/millennium_x" target="_blank" title="Gitee">
-                                <i class="fab fa-git-alt"></i>
-                                <span>Gitee</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="mailto:millenniumstudio907@gmail.com" title="Email">
-                                <i class="fas fa-envelope"></i>
-                                <span>Email</span>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="wechat-link">
-                                <i class="fab fa-weixin"></i>
-                                <span>WeChat</span>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/profile.php?id=61572657804568" target="_blank" title="Facebook">
-                                <i class="fab fa-facebook"></i>
-                                <span>Facebook</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="menu-section">
-                    <h3>分类</h3>
-                    <div class="category-list">
-                        <% site.categories.each(function(category) { %>
-                            <div class="category-list-item">
-                                <a href="<%- url_for(category.path) %>"><%= category.name %></a>
-                                <span class="category-list-count"><%= category.length %></span>
-                            </div>
-                        <% }) %>
-                    </div>
-                </div>
-                <div class="menu-section">
-                    <h3>友情链接</h3>
-                    <ul class="friend-links">
-                        <li><a href="http://120.24.190.132/home" target="_blank">火星编程Online Judge</a></li>
-                        <li><a href="https://www.googoltech.com.cn/index.html" target="_blank">固高科技</a></li>
-                        <li><a href="https://dgsyhxx.dgjy.net/" target="_blank">东莞市粤华学校</a></li>
-                    </ul>
-                </div>
+            <nav class="nav-mobile">
+                <a href="<%- url_for() %>" class="nav-link <% if(page.path === 'index.html' || page.path === '') { %>active<% } %>">Home</a>
+                <% if (site.categories.length) { %>
+                    <a href="<%- url_for('categories') %>" class="nav-link">Categories</a>
+                <% } %>
+                <a href="https://github.com/Miller-Maxim" target="_blank" class="nav-link" title="GitHub">GitHub</a>
+                <a href="mailto:<%= config.email || 'miller-maxim@example.com' %>" class="nav-link" title="Email">Email</a>
             </nav>
         </div>
     </header>
@@ -102,73 +56,87 @@
 
     <footer>
         <div class="container">
-            <p>
-                <span class="copyright">&copy; <%= date(new Date(), 'YYYY') %> MILLENNIUM Studio</span>
-                <span class="footer-divider">|</span>
-                <span class="theme-info">Designed by <a href="https://github.com/MILLENNIUM-Studio/hexo-theme-miller" target="_blank">Miller Theme</a></span>
-            </p>
+            <p>&copy; <%= date(new Date(), 'YYYY') %> <%= config.author %> · <a href="https://github.com/Miller-Maxim/Miller-Theme" target="_blank">Miller Theme</a></p>
         </div>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const menuOverlay = document.querySelector('.menu-overlay');
-            
-            menuToggle.addEventListener('click', function() {
-                menuToggle.classList.toggle('active');
-                menuOverlay.style.display = menuOverlay.style.display === 'block' ? 'none' : 'block';
-                
-                if (menuOverlay.style.display === 'block') {
-                    // 强制重排以触发过渡动画
-                    menuOverlay.offsetHeight;
-                    menuOverlay.style.opacity = '1';
-                    document.body.style.overflow = 'hidden';
+            var codeEls = document.querySelectorAll('pre > code.hljs');
+            codeEls.forEach(function(codeEl) {
+                var pre = codeEl.parentElement;
+                var wrapper = document.createElement('div');
+                wrapper.className = 'code-block';
+                pre.parentNode.insertBefore(wrapper, pre);
+
+                var divider = document.createElement('div');
+                divider.className = 'code-divider';
+                wrapper.appendChild(divider);
+
+                wrapper.appendChild(pre);
+
+                var lang = '';
+                if (codeEl.className) {
+                    var match = codeEl.className.match(/language-(\w+)/);
+                    if (match) lang = match[1].toUpperCase();
+                }
+                if (!lang && codeEl.className) {
+                    var match2 = codeEl.className.match(/hljs\s+(\w+)/);
+                    if (match2) lang = match2[1].toUpperCase();
+                }
+                if (lang) {
+                    var label = document.createElement('span');
+                    label.className = 'code-lang-label';
+                    label.textContent = lang;
+                    wrapper.appendChild(label);
+                }
+                var btn = document.createElement('button');
+                btn.className = 'code-copy-btn';
+                btn.textContent = 'Copy';
+                btn.addEventListener('click', function() {
+                    var text = codeEl.textContent;
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    try {
+                        document.execCommand('copy');
+                        btn.textContent = 'Copied!';
+                        btn.classList.add('copied');
+                        setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+                    } catch(e) {}
+                    document.body.removeChild(ta);
+                });
+                wrapper.appendChild(btn);
+            });
+
+            var header = document.querySelector('header');
+            var onScroll = function() {
+                if (window.scrollY > 10) {
+                    header.classList.add('scrolled');
                 } else {
-                    menuOverlay.style.opacity = '0';
-                    setTimeout(() => {
-                        document.body.style.overflow = '';
-                    }, 300);
+                    header.classList.remove('scrolled');
                 }
-            });
-            
-            menuOverlay.addEventListener('click', function(e) {
-                if (e.target === menuOverlay) {
-                    menuToggle.classList.remove('active');
-                    menuOverlay.style.opacity = '0';
-                    setTimeout(() => {
-                        menuOverlay.style.display = 'none';
-                        document.body.style.overflow = '';
-                    }, 300);
-                }
-            });
-            
-            // 微信二维码处理
-            const wechatLink = document.querySelector('.wechat-link');
-            const qrModal = document.querySelector('.qr-modal');
-            const qrOverlay = document.querySelector('.qr-overlay');
-            
-            wechatLink.addEventListener('click', function(e) {
-                e.stopPropagation();
-                qrModal.classList.add('active');
-                qrOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-            
-            qrOverlay.addEventListener('click', function() {
-                qrModal.classList.remove('active');
-                qrOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            var toggle = document.querySelector('.nav-toggle');
+            var mobileNav = document.querySelector('.nav-mobile');
+            if (toggle && mobileNav) {
+                toggle.addEventListener('click', function() {
+                    toggle.classList.toggle('active');
+                    mobileNav.classList.toggle('open');
+                });
+                mobileNav.querySelectorAll('.nav-link').forEach(function(link) {
+                    link.addEventListener('click', function() {
+                        toggle.classList.remove('active');
+                        mobileNav.classList.remove('open');
+                    });
+                });
+            }
         });
     </script>
-
-    <!-- 二维码弹窗 -->
-    <div class="qr-modal">
-        <div class="qr-content">
-            <img src="/images/QRCode.jpg" alt="WeChat QR Code">
-            <p class="qr-tip">扫描二维码添加微信</p>
-        </div>
-    </div>
-    <div class="qr-overlay"></div>
 </body>
-</html> 
+</html>

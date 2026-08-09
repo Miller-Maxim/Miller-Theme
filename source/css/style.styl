@@ -1,55 +1,123 @@
-// 导入谷歌字体
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Poppins:wght@400;500;600&family=Fira+Code:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap')
 
-// 定义变量
+$mobile-width = 768px
+
 :root
-    // 亮色模式变量
-    --bg-gradient: linear-gradient(135deg, #1a1c2c 0%, #2a3c54 100%) fixed
-    --bg-card: rgba(30, 32, 46, 0.85)
-    --text-primary: #e1e1e1
-    --text-secondary: #a0a0a0
-    --accent-color: #007bff
-    --accent-hover: #0056b3
-    --blur-bg: rgba(30, 32, 46, 0.95)
-    --shadow: rgba(0, 0, 0, 0.3)
-    // 圆角变量
+    --bg-gradient: linear-gradient(135deg, #FFF5F7 0%, #FAF0F5 50%, #FCE4EC 100%) fixed
+    --bg-card: rgba(255, 255, 255, 0.72)
+    --text-primary: #4A3B47
+    --text-secondary: #8B7480
+    --accent-color: #FF8FA3
+    --accent-hover: #E91E63
+    --accent-soft: #FFD0DC
+    --blur-bg: rgba(255, 245, 247, 0.92)
+    --shadow: rgba(255, 143, 163, 0.12)
+    --shadow-strong: rgba(255, 143, 163, 0.22)
+    --border-soft: rgba(255, 143, 163, 0.18)
+    --petal-color: #FFB7C5
+    --petal-color-2: #FFD0DC
+    --petal-color-3: #FCE4EC
     --radius-sm: 4px
     --radius-md: 8px
-    --radius-lg: 16px
-    --radius-xl: 24px
+    --radius-lg: 14px
     --radius-full: 9999px
-    // 添加媒体查询断点变量
     --mobile-width: 768px
-    --tablet-width: 1024px
 
-// 深色模式变量
 @media (prefers-color-scheme: dark)
     :root
-        --bg-gradient: linear-gradient(135deg, #1a1c2c 0%, #2a3c54 100%) fixed
-        --bg-card: rgba(30, 32, 46, 0.85)
-        --text-primary: #e1e1e1
-        --text-secondary: #a0a0a0
-        --accent-color: #5c9eff
-        --accent-hover: #7eb1ff
-        --blur-bg: rgba(30, 32, 46, 0.95)
+        --bg-gradient: linear-gradient(135deg, #2D1B2E 0%, #1A0F1C 50%, #3D1F2E 100%) fixed
+        --bg-card: rgba(45, 27, 46, 0.72)
+        --text-primary: #F5E6E8
+        --text-secondary: #C9B0B8
+        --accent-color: #FF8FA3
+        --accent-hover: #FFB7C5
+        --accent-soft: #6D4C5D
+        --blur-bg: rgba(45, 27, 46, 0.92)
         --shadow: rgba(0, 0, 0, 0.3)
+        --shadow-strong: rgba(255, 143, 163, 0.18)
+        --border-soft: rgba(255, 143, 163, 0.14)
+        --petal-color: #FF8FA3
+        --petal-color-2: #FFB7C5
+        --petal-color-3: #F06292
 
-// 基本样式
+// Sakura petals - reduced to 6
+.sakura-falling
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    pointer-events: none
+    z-index: 1
+    overflow: hidden
+
+    .petal
+        position: absolute
+        top: -20px
+        width: 12px
+        height: 12px
+        background: var(--petal-color)
+        border-radius: 100% 0 100% 0
+        opacity: 0
+        animation: fall linear infinite
+
+        &:nth-child(1)
+            left: 10%
+            animation-duration: 14s
+            animation-delay: 0s
+            background: var(--petal-color)
+        &:nth-child(2)
+            left: 30%
+            animation-duration: 11s
+            animation-delay: 3s
+            background: var(--petal-color-2)
+        &:nth-child(3)
+            left: 50%
+            animation-duration: 16s
+            animation-delay: 6s
+            background: var(--petal-color-3)
+        &:nth-child(4)
+            left: 70%
+            animation-duration: 13s
+            animation-delay: 2s
+            background: var(--petal-color)
+        &:nth-child(5)
+            left: 85%
+            animation-duration: 10s
+            animation-delay: 5s
+            background: var(--petal-color-2)
+        &:nth-child(6)
+            left: 95%
+            animation-duration: 15s
+            animation-delay: 1s
+            background: var(--petal-color-3)
+
+@keyframes fall
+    0%
+        transform: translateY(0) rotate(0deg)
+        opacity: 0
+    10%
+        opacity: 0.8
+    50%
+        transform: translateY(50vh) translateX(30px) rotate(180deg)
+        opacity: 0.6
+    100%
+        transform: translateY(105vh) translateX(-20px) rotate(360deg)
+        opacity: 0
+
+// Base
 body
     font-family: 'Poppins', 'Noto Sans SC', sans-serif
-    line-height: 1.6
+    line-height: 1.7
     color: var(--text-primary)
     margin: 0
-    padding: 0
-    background: linear-gradient(135deg, #1a1c2c 0%, #2a3c54 100%) fixed
+    background: var(--bg-gradient)
     background-attachment: fixed
-    position: relative
     min-height: 100vh
-    transition: all 0.3s ease
-    padding-top: 60px
     display: flex
     flex-direction: column
     overflow-x: hidden
+    padding-top: 64px
 
     &:before
         content: ''
@@ -58,984 +126,701 @@ body
         left: 0
         width: 100%
         height: 100%
-        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 60%)
+        background: radial-gradient(circle at 50% 0%, rgba(255, 143, 163, 0.08) 0%, transparent 55%)
         pointer-events: none
         z-index: 1
 
 .container
-    max-width: 800px
+    max-width: 1500px
     margin: 0 auto
-    padding: 0 1rem
+    padding: 0 1.5rem
     position: relative
     z-index: 2
     width: 100%
     box-sizing: border-box
 
-// 主要内容区域
+header .container
+    height: 100%
+
 main.container
     flex: 1 0 auto
-    width: 100%
-    margin-bottom: 1rem
-    padding: 2rem 1rem
+    padding: 3.5rem 1.5rem 2rem
 
-    @media (max-width: var(--mobile-width))
-        padding: 1rem
-        margin-bottom: 0.5rem
-
-// 头部样式
+// Header - beautified
 header
     position: fixed
     top: 0
     left: 0
     right: 0
-    height: 60px
+    height: 68px
     background: var(--blur-bg)
-    backdrop-filter: blur(10px)
-    -webkit-backdrop-filter: blur(10px)
+    backdrop-filter: blur(16px) saturate(1.4)
+    -webkit-backdrop-filter: blur(16px) saturate(1.4)
     z-index: 1001
-    box-shadow: 0 2px 15px var(--shadow)
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1)
-    display: flex
-    align-items: center
-    overflow: visible
-    width: 100%
+    box-shadow: 0 1px 0 var(--border-soft), 0 8px 24px -12px var(--shadow)
 
-    .header-content
+    .header-inner
         display: flex
         align-items: center
         justify-content: space-between
-        gap: 1rem
         height: 100%
-        width: 100%
-        max-width: 800px
+        max-width: 1500px
         margin: 0 auto
-        padding: 0 1rem
-        box-sizing: border-box
+        padding: 0 2rem
 
-        .logo
-            height: 35px
-            flex-shrink: 0
-            
-            img
-                height: 100%
-                width: auto
-                object-fit: contain
-
-        .title-group
-            flex: 1
-            min-width: 0
-            
-            h1
-                font-size: 1.2rem
-                margin: 0
-                font-weight: 600
-                line-height: 1.2
-                
-                a
-                    color: var(--text-primary)
-                    text-decoration: none
-
-                .desktop-title
-                    display: block
-                    
-                .mobile-title
-                    display: none
-                    
-                @media (max-width: var(--mobile-width))
-                    .desktop-title
-                        display: none
-                    
-                    .mobile-title
-                        display: block
-
-            .subtitle
-                color: var(--text-secondary)
-                margin: 0.2rem 0 0
-                font-size: 0.75rem
-                opacity: 0.8
-
-        .menu-toggle
-            width: 40px
-            height: 40px
-            flex-shrink: 0
-            display: flex
-            align-items: center
-            justify-content: center
-            cursor: pointer
-            
-            .menu-icon
-                width: 20px
-                height: 14px
-                position: relative
-                
-                span
-                    display: block
-                    position: absolute
-                    height: 2px
-                    width: 100%
-                    background: var(--text-primary)
-                    border-radius: var(--radius-full)
-                    transition: all 0.3s ease
-                    
-                    &:nth-child(1)
-                        top: 0
-                    
-                    &:nth-child(2)
-                        top: 6px
-                    
-                    &:nth-child(3)
-                        top: 12px
-
-            &.active
-                .menu-icon
-                    span
-                        &:nth-child(1)
-                            transform: rotate(45deg)
-                            top: 6px
-                        
-                        &:nth-child(2)
-                            opacity: 0
-                        
-                        &:nth-child(3)
-                            transform: rotate(-45deg)
-                            top: 6px
-
-    @media (max-width: var(--mobile-width))
-        .header-content
-            gap: 0.8rem
-            padding: 0 0.8rem
-            
-            .logo
-                height: 28px
-                
-                img
-                    height: 100%
-            
-            .title-group
-                h1
-                    font-size: 1rem
-                
-                .subtitle
-                    display: none !important
-            
-            .menu-toggle
-                width: 28px
-                height: 28px
-                
-                .menu-icon
-                    width: 16px
-                    height: 12px
-                    
-                    span
-                        &:nth-child(2)
-                            top: 5px
-                        
-                        &:nth-child(3)
-                            top: 10px
-
-    .logo, .title-group
-        flex-shrink: 0
-        z-index: 2
-
-    .logo
-        transition: transform 0.3s ease
-        
-        img
-            max-height: 35px
-            width: auto
-            filter: drop-shadow(0 2px 4px var(--shadow))
-            transition: transform 0.3s ease
-            
-        &:hover
-            transform: scale(1.05)
-            
-            img
-                transform: rotate(5deg)
-
-    .title-group
+    .brand
         display: flex
+        align-items: center
+        gap: 0.6rem
+        text-decoration: none
+        color: var(--text-primary)
+        font-weight: 600
+        font-size: 1.1rem
+        transition: color 0.25s ease
+
+        .logo-sakura
+            font-size: 1.6rem
+            color: var(--accent-color)
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease
+            filter: drop-shadow(0 0 6px rgba(255, 143, 163, 0.4))
+
+        .brand-title
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-hover) 100%)
+            -webkit-background-clip: text
+            background-clip: text
+            -webkit-text-fill-color: transparent
+
+        &:hover
+            .logo-sakura
+                transform: rotate(20deg) scale(1.15)
+                filter: drop-shadow(0 0 10px rgba(255, 143, 163, 0.6))
+
+    .nav-links
+        display: flex
+        align-items: center
+        gap: 0.35rem
+
+    .nav-toggle
+        display: none
         flex-direction: column
         justify-content: center
-        text-align: left
-
-    h1
-        margin: 0
-        font-weight: 600
-        letter-spacing: -0.5px
-        line-height: 1.2
-        
-        a
-            color: var(--text-primary)
-            text-decoration: none
-            transition: color 0.3s ease
-
-    .subtitle
-        color: var(--text-secondary)
-        margin: 0.2rem 0 0
-        font-weight: 400
-        font-size: 0.85rem
-        opacity: 0.8
-
-    .menu-overlay
-        position: fixed
-        top: 0
-        left: 0
-        width: 100%
-        height: 100vh
-        background: rgba(17, 19, 31, 0.98)
-        backdrop-filter: blur(20px)
-        -webkit-backdrop-filter: blur(20px)
-        z-index: 1000
-        display: none
-        overflow-y: auto
-        padding-top: 60px
-        opacity: 0
-        transition: opacity 0.3s ease
-        display: flex
-        justify-content: center
-        align-items: flex-start
-        
-        .menu-content
-            max-width: 800px
-            margin: 2rem auto
-            padding: 2rem
-            width: 100%
-            box-sizing: border-box
-            
-            @media (max-width: var(--mobile-width))
-                padding: 1.5rem
-                margin: 1rem
-                width: calc(100% - 2rem)
-            
-            .menu-section
-                background: rgba(255, 255, 255, 0.04)
-                border-radius: var(--radius-lg)
-                padding: 1.5rem
-                margin-bottom: 1.5rem
-                border: 1px solid rgba(255, 255, 255, 0.05)
-                width: 100%
-                box-sizing: border-box
-                
-                @media (max-width: var(--mobile-width))
-                    padding: 1.2rem
-                    margin-bottom: 1rem
-                
-                h3
-                    color: var(--text-primary)
-                    margin: 0 0 1.2rem
-                    font-size: 1.1rem
-                    font-weight: 500
-                    position: relative
-                    padding-left: 1rem
-                    
-                    &:before
-                        content: ''
-                        position: absolute
-                        left: 0
-                        top: 50%
-                        transform: translateY(-50%)
-                        width: 3px
-                        height: 16px
-                        background: var(--accent-color)
-                        border-radius: 2px
-
-    .category-list
-        display: grid
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
-        gap: 0.5rem
-
-        .category-list-item
-            background: rgba(255, 255, 255, 0.03)
-            padding: 0.8rem 1rem
-            border-radius: var(--radius-md)
-            margin-bottom: 0.5rem
-            display: flex
-            justify-content: space-between
-            align-items: center
-            border: 1px solid rgba(255, 255, 255, 0.05)
-            transition: all 0.3s ease
-            
-            a
-                color: var(--text-primary)
-                text-decoration: none
-                font-size: 0.9rem
-                opacity: 0.9
-            
-            .category-list-count
-                background: rgba(255, 255, 255, 0.1)
-                padding: 0.2rem 0.6rem
-                border-radius: var(--radius-sm)
-                font-size: 0.8rem
-                color: var(--text-secondary)
-            
-            &:hover
-                background: var(--accent-color)
-                color: #fff
-                transform: translateY(-2px)
-                border-color: var(--accent-color)
-                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3)
-                
-                a
-                    color: #fff
-                    opacity: 1
-
-    .friend-links
-        list-style: none
+        align-items: center
+        width: 40px
+        height: 40px
+        background: transparent
+        border: 1px solid var(--border-soft)
+        border-radius: 10px
+        cursor: pointer
+        gap: 5px
+        transition: all 0.3s ease
         padding: 0
-        margin: 0
-        display: grid
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))
-        gap: 0.5rem
-        width: 100%
-        box-sizing: border-box
-        
-        li
-            margin: 0
-            
-            a
-                background: rgba(255, 255, 255, 0.03)
-                padding: 0.75rem 1rem
-                border-radius: var(--radius-md)
-                transition: all 0.3s ease
-                display: flex
-                align-items: center
-                border: 1px solid rgba(255, 255, 255, 0.05)
-                color: var(--text-primary)
-                text-decoration: none
-                font-weight: 500
-                position: relative
-                width: 100%
-                box-sizing: border-box
+
+        span
+            display: block
+            width: 20px
+            height: 2px
+            background: var(--text-secondary)
+            border-radius: 2px
+            transition: all 0.3s ease
+
+            &:nth-child(2)
+                width: 14px
+
+        &:hover
+            border-color: var(--accent-color)
+
+            span
+                background: var(--accent-color)
+
+        &.active
+            span
+                &:nth-child(1)
+                    transform: translateY(7px) rotate(45deg)
+                &:nth-child(2)
+                    opacity: 0
+                &:nth-child(3)
+                    transform: translateY(-7px) rotate(-45deg)
+
+    .nav-mobile
+        display: none
+        max-height: 0
+        overflow: hidden
+        transition: max-height 0.35s ease
+
+        .nav-link
+            display: block
+            padding: 0.75rem 1rem
+            color: var(--text-secondary)
+            text-decoration: none
+            font-weight: 500
+            font-size: 0.95rem
+            border-bottom: 1px solid var(--border-soft)
+            transition: all 0.25s ease
+
+            &:last-child
+                border-bottom: none
+
+            &:hover
+                color: var(--accent-hover)
+                background: rgba(255, 143, 163, 0.08)
+
+            &.active
+                color: var(--accent-hover)
+                background: rgba(255, 143, 163, 0.1)
+
+        &.open
+            max-height: 400px
+
+    .nav-links
+        .nav-link
+            position: relative
+            color: var(--text-secondary)
+            text-decoration: none
+            font-size: 0.88rem
+            font-weight: 500
+            padding: 0.4rem 0.85rem
+            border-radius: var(--radius-md)
+            transition: all 0.25s ease
+
+            i
+                font-size: 0.95rem
+
+            &:hover
+                color: var(--accent-hover)
+                background: rgba(255, 143, 163, 0.1)
+
+            &.active
+                color: var(--accent-hover)
+                background: rgba(255, 143, 163, 0.12)
+
+        &.scrolled
+            box-shadow: 0 1px 0 var(--border-soft), 0 12px 32px -16px var(--shadow)
+            border-bottom: 1px solid var(--border-soft)
+
+    @media (max-width: $mobile-width)
+        height: auto
+        min-height: 56px
+        overflow: visible
+
+        .container
+            height: auto
+            padding: 0 0.5rem 0 0.25rem
+
+        .header-inner
+            padding: 0
+            height: auto
+            min-height: 56px
+            gap: 0.25rem
+
+        .brand
+            font-size: 0.92rem
+            flex: 1
+            min-width: 0
+            gap: 0.4rem
+            flex-shrink: 1
+
+            .logo-sakura
+                font-size: 1.3rem
+
+            .brand-title
                 white-space: nowrap
                 overflow: hidden
                 text-overflow: ellipsis
-                
-                &:hover
-                    background: var(--accent-color)
-                    color: #fff
-                    transform: translateY(-2px)
-                    border-color: var(--accent-color)
-                    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3)
+                max-width: 100%
 
-    @media (max-width: var(--mobile-width))
-        .menu-content
-            padding: 1rem
-            
-        .menu-section
-            padding: 1rem
-            margin-bottom: 1rem
-            
-            h3
-                font-size: 1rem
-                margin-bottom: 1rem
+        .nav-links
+            display: none
 
-        .category-list,
-        .friend-links
-            grid-template-columns: 1fr
+        .nav-toggle
+            display: flex
+            width: 38px
+            height: 38px
+            flex-shrink: 0
 
-// 文章样式
+            span
+                width: 18px
+
+        .nav-mobile
+            display: block
+            border-top: 1px solid var(--border-soft)
+            padding: 0 0.5rem
+            background: var(--bg-card)
+            backdrop-filter: blur(8px)
+            -webkit-backdrop-filter: blur(8px)
+
+main.container
+    @media (max-width: $mobile-width)
+        padding: 4.5rem 0.75rem 1.5rem 0.25rem
+
+// Article list
 article
     background: var(--bg-card)
-    backdrop-filter: blur(5px)
-    -webkit-backdrop-filter: blur(5px)
-    padding: 1.5rem
+    backdrop-filter: blur(8px)
+    -webkit-backdrop-filter: blur(8px)
+    padding: 1.75rem
     border-radius: var(--radius-lg)
-    box-shadow: 0 4px 20px var(--shadow)
-    margin-bottom: 1.5rem
+    margin-bottom: 1.75rem
+    border: 1px solid rgba(255, 143, 163, 0.25)
+    box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.08), 0 0 16px -4px rgba(255, 143, 163, 0.15), 0 2px 8px -2px var(--shadow)
     transition: all 0.3s ease
-    position: relative
-    z-index: 3
-    border: 1px solid rgba(255, 255, 255, 0.1)
-    transform: translateY(0)
-    
+
+    @media (prefers-color-scheme: dark)
+        border-color: rgba(255, 143, 163, 0.3)
+        box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.12), 0 0 20px -4px rgba(255, 143, 163, 0.18), 0 2px 8px -2px rgba(0, 0, 0, 0.5)
+
     &:hover
-        transform: translateY(-2px)
-        box-shadow: 0 6px 25px var(--shadow)
+        border-color: rgba(255, 143, 163, 0.5)
+        box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.2), 0 0 24px -4px rgba(255, 143, 163, 0.3), 0 4px 16px -4px var(--shadow)
 
     .title
-        font-size: 1.5rem
-        margin-bottom: 1rem
+        font-size: 1.35rem
+        margin: 0 0 0.75rem
         font-weight: 600
-        word-wrap: break-word
         line-height: 1.4
-        
+
         a
             color: var(--text-primary)
             text-decoration: none
-            transition: color 0.3s ease
-            background: linear-gradient(
-                to right,
-                var(--accent-color) 0%,
-                var(--accent-color) 100%
-            )
-            background-size: 0 2px
-            background-repeat: no-repeat
-            background-position: 0 100%
-            transition: background-size 0.3s ease
-            
+            transition: color 0.25s ease
+
             &:hover
-                background-size: 100% 2px
-                color: var(--accent-color)
+                color: var(--accent-hover)
 
     .meta
         color: var(--text-secondary)
-        font-size: 0.85rem
-        margin-bottom: 1rem
-        letter-spacing: 0.5px
-        opacity: 0.8
-        
-        .categories
-            margin-left: 1rem
-            
-            a
-                color: var(--text-primary)
-                text-decoration: none
-                transition: all 0.3s ease
-                padding: 0.2rem 0.5rem
-                border-radius: var(--radius-sm)
-                background: var(--blur-bg)
-                border: 1px solid rgba(255, 255, 255, 0.1)
-                font-weight: 500
-                
-                &:hover
-                    background: var(--accent-color)
-                    color: #fff
-                    border-color: var(--accent-color)
-                    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3)
+        font-size: 0.82rem
+        margin-bottom: 0.75rem
 
-// 分页样式
+    .excerpt
+        color: var(--text-primary)
+        opacity: 0.85
+        line-height: 1.7
+
+// Pagination
 .pagination
     text-align: center
     margin: 3rem 0
 
-    @media (max-width: var(--mobile-width))
-        margin: 2rem 0
-    
     .page-number,
     .extend
         display: inline-block
-        padding: 0.5rem 1rem
-        margin: 0 0.2rem
+        padding: 0.4rem 0.85rem
+        margin: 0 0.15rem
         border-radius: var(--radius-md)
-        background: var(--blur-bg)
+        background: var(--bg-card)
         color: var(--text-primary)
         text-decoration: none
-        transition: all 0.3s ease
-        border: 1px solid rgba(255, 255, 255, 0.1)
-        
+        border: 1px solid var(--border-soft)
+        transition: all 0.25s ease
+
         &:hover
             background: var(--accent-color)
             color: #fff
-            transform: translateY(-2px)
             border-color: var(--accent-color)
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3)
-        
+
         &.current
             background: var(--accent-color)
             color: #fff
             border-color: var(--accent-color)
 
-// 页脚样式
+// Footer
 footer
     flex-shrink: 0
-    width: 100%
-    padding: 0.75rem 0
-    background: var(--blur-bg)
-    backdrop-filter: blur(10px)
-    -webkit-backdrop-filter: blur(10px)
+    padding: 1.25rem 0
     color: var(--text-secondary)
-    box-shadow: 0 -2px 15px var(--shadow)
-    font-size: 0.75rem
-    border-top: 1px solid rgba(255, 255, 255, 0.1)
     text-align: center
-    position: relative
-    z-index: 1
-    margin-top: auto
+    font-size: 0.8rem
 
-    .container
-        margin: 0 auto
-        padding: 0
-        max-width: 100%
-        box-sizing: border-box
-        
-        p
-            margin: 0
-            display: flex
-            align-items: center
-            justify-content: center
-            flex-wrap: nowrap
-            white-space: nowrap
-            gap: 0.4rem
-            line-height: 1.4
-            
-            span
-                display: inline-block
-                white-space: nowrap
-                font-size: 0.75rem
-                opacity: 0.7
+    p
+        margin: 0
 
-        .copyright
-            font-weight: 500
-
-        .footer-divider
-            opacity: 0.3
-            user-select: none
-            margin: 0 0.2rem
-
-        .theme-info
-            a
-                color: var(--accent-color)
-                text-decoration: none
-                font-weight: 400
-                transition: all 0.3s ease
-                
-                &:hover
-                    color: var(--accent-hover)
-                    opacity: 0.9
-
-    @media (max-width: var(--mobile-width))
-        padding: 0.75rem 0
-        
-        .container
-            padding: 0
-            
-            p
-                gap: 0.4rem
-                padding: 0 0.5rem
-                
-                span
-                    font-size: 0.75rem
-                    line-height: 1.4
-                    opacity: 0.6
-
-// 文章详情页样式
-.post
-    background: var(--bg-card)
-    backdrop-filter: blur(5px)
-    -webkit-backdrop-filter: blur(5px)
-    padding: 3rem
-    border-radius: var(--radius-lg)
-    box-shadow: 0 4px 20px var(--shadow)
-
-    .title
-        font-size: 2.5rem
-        margin-bottom: 1rem
-        font-weight: 600
-        letter-spacing: -0.5px
-        color: var(--text-primary)
-        
-    .meta
-        color: var(--text-secondary)
-        margin-bottom: 2rem
-        
-        span
-            margin-right: 1.5rem
-            
         a
             color: var(--accent-color)
             text-decoration: none
-            transition: all 0.3s ease
-            
+
+            &:hover
+                color: var(--accent-hover)
+
+// Post detail
+.post
+    background: var(--bg-card)
+    backdrop-filter: blur(8px)
+    -webkit-backdrop-filter: blur(8px)
+    padding: 2.5rem
+    border-radius: var(--radius-lg)
+    border: 1px solid rgba(255, 143, 163, 0.3)
+    box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.1), 0 0 20px -4px rgba(255, 143, 163, 0.2), 0 2px 8px -2px var(--shadow)
+    transition: all 0.3s ease
+
+    @media (prefers-color-scheme: dark)
+        border-color: rgba(255, 143, 163, 0.35)
+        box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.15), 0 0 24px -4px rgba(255, 143, 163, 0.22), 0 2px 8px -2px rgba(0, 0, 0, 0.5)
+
+    .title
+        font-size: 2.2rem
+        margin: 0 0 1rem
+        font-weight: 600
+        color: var(--text-primary)
+
+    .meta
+        color: var(--text-secondary)
+        margin-bottom: 2rem
+        font-size: 0.88rem
+
+        span
+            margin-right: 1.2rem
+
+        a
+            color: var(--accent-hover)
+            text-decoration: none
+
             &:hover
                 text-decoration: underline
-                
+
     .content
         line-height: 1.8
-        
+
         h1, h2, h3, h4, h5, h6
-            margin: 2.5rem 0 1.5rem
+            margin: 2.5rem 0 1.2rem
             font-weight: 600
-            letter-spacing: -0.5px
             color: var(--text-primary)
-            
+
+        h2
+            position: relative
+            padding-left: 0.8rem
+
+            &:before
+                content: ''
+                position: absolute
+                left: 0
+                top: 50%
+                transform: translateY(-50%)
+                width: 3px
+                height: 65%
+                background: var(--accent-color)
+                border-radius: var(--radius-full)
+
         p
-            margin-bottom: 1.5rem
+            margin-bottom: 1.2rem
             color: var(--text-primary)
-            
+
         img
             max-width: 100%
             height: auto
             border-radius: var(--radius-md)
             box-shadow: 0 4px 12px var(--shadow)
-            
+
         blockquote
-            margin: 2rem 0
-            padding: 1.5rem
-            background: var(--blur-bg)
-            backdrop-filter: blur(5px)
-            -webkit-backdrop-filter: blur(5px)
-            border-left: 4px solid var(--accent-color)
+            margin: 1.5rem 0
+            padding: 1.2rem
+            background: rgba(255, 143, 163, 0.06)
+            border-left: 3px solid var(--accent-color)
             border-radius: 0 var(--radius-md) var(--radius-md) 0
-            
-        code
-            font-family: 'JetBrains Mono', 'Fira Code', monospace
-            font-size: 0.9em
-            font-weight: 500
-            background: var(--blur-bg)
-            color: var(--accent-color)
-            padding: 0.2em 0.4em
-            border-radius: var(--radius-sm)
-            margin: 0 0.2em
-            
-        pre
-            background: var(--blur-bg)
-            backdrop-filter: blur(5px)
-            -webkit-backdrop-filter: blur(5px)
-            padding: 1.5rem
-            border-radius: var(--radius-md)
-            overflow-x: auto
-            box-shadow: 0 4px 12px var(--shadow)
-            
-            code
-                color: var(--text-primary)
-                padding: 0
-                margin: 0
-                background: none
-                font-weight: 400
+            color: var(--text-secondary)
 
         a
-            color: var(--accent-color)
+            color: var(--accent-hover)
             text-decoration: none
-            background: linear-gradient(
-                to right,
-                var(--accent-color) 0%,
-                var(--accent-color) 100%
-            )
-            background-size: 0 1px
-            background-position: 0 100%
-            background-repeat: no-repeat
-            padding-bottom: 2px
-            transition: all 0.3s ease
-            
+            border-bottom: 1px solid var(--accent-soft)
+            transition: all 0.25s ease
+
             &:hover
-                background-size: 100% 1px
+                color: var(--accent-color)
+                border-bottom-color: var(--accent-color)
+
+        table
+            width: 100%
+            border-collapse: collapse
+            margin: 1.5rem 0
+            border-radius: var(--radius-md)
+            overflow: hidden
+
+            th, td
+                padding: 0.6rem 1rem
+                border: 1px solid var(--border-soft)
+                text-align: left
+
+            th
+                background: rgba(255, 143, 163, 0.1)
                 color: var(--accent-hover)
+                font-weight: 600
 
-// 添加滚动条样式
-::-webkit-scrollbar
-    width: 8px
-    height: 10px
+            tr:nth-child(even) td
+                background: rgba(255, 143, 163, 0.03)
 
-::-webkit-scrollbar-track
-    background: var(--bg-card)
+    @media (max-width: $mobile-width)
+        padding: 1.25rem 1rem
 
-::-webkit-scrollbar-thumb
-    background: var(--accent-color)
-    border-radius: var(--radius-full)
-    border: 2px solid var(--blur-bg)
+        .title
+            font-size: 1.4rem
 
-    &:hover
-        background: var(--accent-hover)
+article
+    @media (max-width: $mobile-width)
+        padding: 1.25rem 1rem
+        margin-bottom: 1.25rem
 
-// 代码高亮样式
+        .title
+            font-size: 1.15rem
+
+// Code highlight - simplified stable version
 pre, code
-    font-family: 'JetBrains Mono', 'Fira Code', monospace
-    font-size: 0.95rem
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace
+    font-size: 0.88rem
+    line-height: 1.6
 
-.highlight
-    background: var(--blur-bg)
-    backdrop-filter: blur(5px)
-    -webkit-backdrop-filter: blur(5px)
-    margin: 1.5rem 0
-    padding: 1rem
-    border-radius: var(--radius-md)
-    box-shadow: 0 4px 12px var(--shadow)
-    overflow-x: auto
-    
-    @media (max-width: var(--mobile-width))
-        margin: 1rem 0
-        padding: 0.75rem
-        
-        .gutter
-            display: none
-        
-        .code
-            padding-left: 0
-    
-    pre
+:not(pre) > code
+    font-family: 'JetBrains Mono', 'Fira Code', monospace
+    font-size: 0.86em
+    background: rgba(255, 143, 163, 0.12)
+    color: var(--accent-hover)
+    padding: 0.18em 0.45em
+    border-radius: var(--radius-sm)
+    word-break: break-word
+
+// Hide legacy highlight structures
+figure.highlight
+    display: none
+
+// Code block - applied via JS wrapper for maximum compatibility
+.code-block
+    position: relative
+    background: #2D1B2E
+    margin: 1.75rem 0
+    border-radius: 12px
+    overflow: hidden
+    border: 1px solid rgba(255, 143, 163, 0.3)
+    padding: 2.25rem 1.25rem 1.25rem
+    box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.1), 0 0 24px -4px rgba(255, 143, 163, 0.25), 0 4px 16px -8px rgba(45, 27, 46, 0.4)
+
+    @media (prefers-color-scheme: dark)
+        background: #1A0F1C
+        box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.15), 0 0 28px -4px rgba(255, 143, 163, 0.2), 0 4px 16px -8px rgba(0, 0, 0, 0.6)
+
+    > .code-divider
+        height: 1px
+        margin: 0.3rem 0 1rem
+        background: linear-gradient(90deg, transparent, rgba(255, 143, 163, 0.5), transparent)
+        border: none
+        position: relative
+        z-index: 10
+
+    > pre
         margin: 0
         padding: 0
-        background: none
+        background: transparent
+        border: none
         box-shadow: none
-        
-    table
-        width: 100%
-        margin: 0
-        border-spacing: 0
-        
-    .gutter
-        width: 40px
-        padding-right: 1rem
-        text-align: right
-        color: var(--text-secondary)
-        user-select: none
-        border-right: 1px solid var(--text-secondary)
-        opacity: 0.5
-        
-    .code
-        padding-left: 1rem
-        
-    .line
-        height: 1.5rem
-        
-    // 语法高亮颜色
-    .keyword
-        color: #c678dd
-        font-weight: 500
-        
-    .function
-        color: #61afef
-        
-    .string
-        color: #98c379
-        
-    .number
-        color: #d19a66
-        
-    .comment
-        color: var(--text-secondary)
-        font-style: italic
-        
-    .operator
-        color: #56b6c2
-        
-    .class
-        color: #e5c07b
-        
-    .variable
-        color: #e06c75
+        overflow: hidden
 
-// 深色模式下的语法高亮调整
-@media (prefers-color-scheme: dark)
-    .highlight
-        .keyword
-            color: #c678dd
-            
-        .function
-            color: #61afef
-            
-        .string
-            color: #98c379
-            
-        .number
-            color: #d19a66
-            
-        .comment
-            color: #7f848e
-            
-        .operator
-            color: #56b6c2
-            
-        .class
-            color: #e5c07b
-            
-        .variable
-            color: #e06c75 
+    > pre > code
+        background: transparent
+        color: #E8D4DC
+        padding: 0
+        font-weight: 400
+        white-space: pre
+        display: block
+        overflow-x: auto
+        line-height: 1.65
+        tab-size: 4
+        font-size: 0.85rem
 
-// 搜索框、输入框等表单元素的圆角
-input, textarea, select
-    border-radius: var(--radius-sm)
+    @media (max-width: $mobile-width)
+        margin: 1.25rem -0.25rem
+        border-radius: 10px
+        padding: 2rem 0.75rem 0.75rem
+        box-shadow: 0 0 0 1px rgba(255, 143, 163, 0.08), 0 0 16px -4px rgba(255, 143, 163, 0.18)
 
-// 按钮圆角
-button, .button
-    border-radius: var(--radius-md)
+        > pre > code
+            font-size: 0.78rem
+            line-height: 1.55
+            tab-size: 2
 
-// 标签和分类的圆角
-.tags, .categories
-    a
-        border-radius: var(--radius-full)
-        padding: 0.3em 1em
+// Global mobile overflow guard
+html, body
+    overflow-x: hidden
 
-// 添加一些交互动画
-@keyframes borderRadius
-    0%
-        border-radius: var(--radius-lg)
-    50%
-        border-radius: calc(var(--radius-lg) + 8px)
-    100%
-        border-radius: var(--radius-lg)
+body
+    @media (max-width: $mobile-width)
+        overflow-x: hidden
+        max-width: 100vw
+        position: relative
 
-// 为卡片添加hover时的圆角动画
-article:hover, .post:hover
-    animation: borderRadius 2s ease-in-out infinite 
-
-// 社交媒体链接样式
-.social-links
-    list-style: none
-    padding: 0
-    margin: 0
-    display: grid
-    grid-template-columns: repeat(2, 1fr)
-    gap: 0.6rem
-    width: 100%
-    box-sizing: border-box
-    
-    @media (max-width: var(--mobile-width))
-        gap: 0.5rem
-    
-    li
-        margin: 0
-        
-        a, .wechat-link
-            background: rgba(255, 255, 255, 0.03)
-            padding: 0.5rem 0.8rem
-            border-radius: var(--radius-md)
-            display: flex
-            align-items: center
-            gap: 0.5rem
-            color: var(--text-primary)
-            text-decoration: none
-            transition: all 0.3s ease
-            border: 1px solid rgba(255, 255, 255, 0.05)
-            width: 100%
-            box-sizing: border-box
-            
-            i
-                font-size: 1rem
-                width: 1rem
-                text-align: center
-                flex-shrink: 0
-                opacity: 0.9
-                transition: transform 0.3s ease
-            
-            span
-                font-size: 0.85rem
-                white-space: nowrap
-                overflow: hidden
-                text-overflow: ellipsis
-                opacity: 0.8
-                flex: 1
-            
-            &:hover
-                background: var(--accent-color)
-                color: #fff
-                transform: translateY(-2px)
-                border-color: var(--accent-color)
-                box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3)
-                
-                i
-                    transform: scale(1.1)
-                    opacity: 1
-                
-                span
-                    opacity: 1
-
-    .wechat-link
-        cursor: pointer
-        transition: all 0.3s ease
-        
-        &:hover
-            background: var(--accent-color)
-            color: #fff
-            transform: translateY(-2px)
-            border-color: var(--accent-color)
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3)
-
-// 二维码弹窗样式
-.qr-modal
-    position: fixed
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%) scale(0.9)
-    background: var(--bg-card)
-    padding: 2rem
-    border-radius: var(--radius-lg)
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2)
-    z-index: 1001
-    opacity: 0
-    visibility: hidden
-    transition: all 0.3s ease
-    border: 1px solid rgba(255, 255, 255, 0.1)
-    text-align: center
-    min-width: 320px
-    
-    &.active
-        opacity: 1
-        visibility: visible
-        transform: translate(-50%, -50%) scale(1)
-    
-    .qr-content
-        img
-            width: 280px
-            height: 280px
-            display: block
-            object-fit: contain
-            border-radius: var(--radius-md)
-            margin: 0 auto
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1)
-        
-        .qr-tip
-            margin: 1.5rem 0 0
-            color: var(--text-primary)
-            font-size: 1rem
-            font-weight: 500
-            opacity: 0.8
-            letter-spacing: 0.5px
-
-// 遮罩层样式
-.qr-overlay
-    position: fixed
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    background: rgba(0, 0, 0, 0.6)
-    backdrop-filter: blur(5px)
-    -webkit-backdrop-filter: blur(5px)
-    z-index: 1000
-    opacity: 0
-    visibility: hidden
-    transition: all 0.3s ease
-    
-    &.active
-        opacity: 1
-        visibility: visible
-
-// 移动端适配
-@media (max-width: var(--mobile-width))
-    .qr-modal
-        min-width: 280px
-        padding: 1.5rem
-        
-        .qr-content
-            img
-                width: 240px
-                height: 240px
-            
-            .qr-tip
-                margin: 1.2rem 0 0
-                font-size: 0.9rem
-    .social-links
-        grid-template-columns: repeat(2, 1fr)
-        gap: 0.5rem
-        width: 100%
+*
+    @media (max-width: $mobile-width)
         box-sizing: border-box
-        
-        li
-            a, .wechat-link
-                padding: 0.5rem 0.8rem
-                
-                i
-                    font-size: 1rem
-                    width: 1rem
-                
-                span
-                    font-size: 0.85rem
-                    
-    @media (max-width: 480px)
-        .menu-section
-            h3
-                font-size: 0.95rem
-                margin-bottom: 0.8rem
-                
-        .social-links
-            grid-template-columns: repeat(2, 1fr)
 
-// 移动端标题样式优化
-@media (max-width: var(--mobile-width))
-    .menu-section
-        h3
-            + .social-links,
-            + .category-list,
-            + .friend-links
-                margin-top: 0.8rem 
+img, table, pre, .code-block, article, .post
+    @media (max-width: $mobile-width)
+        max-width: 100%
+
+// Syntax highlighting colors
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag
+    color: #FF8FA3
+    font-weight: 600
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition
+    color: #FFC1CC
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion
+    color: #9A7B8A
+    font-style: italic
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title
+    color: #FFB7C5
+
+.hljs-function,
+.hljs-title.class_,
+.hljs-title.function_
+    color: #FFD0DC
+
+.hljs-variable,
+.hljs-params
+    color: #F8BBD0
+
+.hljs-built_in,
+.hljs-method
+    color: #F06292
+
+.hljs-operator,
+.hljs-punctuation
+    color: #D4A5C0
+
+.hljs-regexp
+    color: #F48FB1
+
+.hljs-selector-class,
+.hljs-selector-id
+    color: #FFD0DC
+
+.hljs-attribute
+    color: #C58CA0
+
+.hljs-meta
+    color: #EC407A
+    font-style: italic
+
+.hljs-tag .hljs-name
+    color: #FF8FA3
+
+.hljs-tag .hljs-attr
+    color: #FFD0DC
+
+.hljs-doctag
+    color: #FF8FA3
+
+.hljs-code
+    color: #FFC1CC
+
+.hljs-emphasis
+    font-style: italic
+    color: #FFB7C5
+
+.hljs-strong
+    font-weight: 700
+    color: #FF8FA3
+
+// Scrollbar in code blocks
+.code-block > pre > code::-webkit-scrollbar
+    height: 8px
+    width: 8px
+
+.code-block > pre > code::-webkit-scrollbar-track
+    background: rgba(255, 143, 163, 0.05)
+    border-radius: 4px
+
+.code-block > pre > code::-webkit-scrollbar-thumb
+    background: rgba(255, 143, 163, 0.3)
+    border-radius: 4px
+
+    &:hover
+        background: rgba(255, 143, 163, 0.5)
+
+// Copy button & lang label (positioned inside .code-block)
+.code-copy-btn
+    position: absolute
+    top: 0.45rem
+    right: 0.75rem
+    padding: 0.3rem 0.6rem
+    font-size: 0.72rem
+    font-family: 'JetBrains Mono', monospace
+    font-weight: 500
+    color: #FFD0DC
+    background: rgba(255, 143, 163, 0.15)
+    border: 1px solid rgba(255, 143, 163, 0.3)
+    border-radius: 6px
+    cursor: pointer
+    opacity: 1
+    transition: all 0.25s ease
+    z-index: 10
+    backdrop-filter: blur(8px)
+
+    &:hover
+        background: rgba(255, 143, 163, 0.35)
+        color: #fff
+        border-color: rgba(255, 143, 163, 0.5)
+
+    &.copied
+        background: rgba(76, 175, 80, 0.85)
+        color: #fff
+        border-color: rgba(76, 175, 80, 0.5)
+
+.code-lang-label
+    position: absolute
+    top: 0.5rem
+    left: 0.75rem
+    padding: 0.25rem 0.55rem
+    font-size: 0.68rem
+    font-family: 'JetBrains Mono', monospace
+    font-weight: 600
+    color: #FFE4EC
+    background: rgba(255, 143, 163, 0.2)
+    border-radius: 6px
+    letter-spacing: 0.5px
+    text-transform: uppercase
+    z-index: 10
+    pointer-events: none
+
+// Scrollbar
+::-webkit-scrollbar
+    width: 6px
+
+::-webkit-scrollbar-track
+    background: transparent
+
+::-webkit-scrollbar-thumb
+    background: var(--accent-soft)
+    border-radius: var(--radius-full)
+
+    &:hover
+        background: var(--accent-color)
+
+// Selection
+::selection
+    background: var(--accent-color)
+    color: #fff
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce)
+    .sakura-falling
+        display: none
